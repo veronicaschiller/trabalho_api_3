@@ -1,0 +1,18 @@
+import bcrypt from 'bcrypt'
+
+export default function validaSenha(next) {
+    const {id, nome , senha} = req.body 
+    const verifica = bcrypt.compareSync(senha)
+
+    if (senha == verifica(senha)){
+        const token = jwt.sing({
+            Login_user_id: id,
+            Login_user_nome : nome
+        }, 
+            process.env.JWT_KEY,
+            {expiresIn:'1h'}
+       )
+       res.status(200).json({msg: "Ok. Logado", token})
+    }
+next()
+}
